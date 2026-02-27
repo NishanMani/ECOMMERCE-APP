@@ -1,28 +1,29 @@
-import User from "../models/user.model.js";
+import User from '../models/user.model.js'
+import bcrypt from 'bcryptjs'
 
 export const updateProfile = async (req, res) => {
-  try {
-    const { name, email} = req.body;
+    try {
+        const user = await User.findById(req.user._id)
 
-    const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' })
+        }
 
-    if (!user)
-      return res.status(404).json({ success: false, message: "User not found" });
+        const { name, email, password, address } = req.body
 
-    if (name) user.name = name;
-    if (email) user.email = email;
+        if (name) user.name = name
+        if (email) user.email = email
+        if (address) user.address = address
 
-    await user.save();
+        if (password) {
+            const salt = await bcrypt.genSalt(10)
+            user.password = await bcrypt.hash(password, salt)
+        }
 
-    return res.status(200).json({success: true, message: "Profile updated successfully",
-      data: {
-        _id: user._id,
-        name: user.name,
-        email: user.email
-      }
-    });
+        await user.save()
 
-  } catch (error) {
-    return res.status(500).json({ success: false, message: error.message });
-  }
-};
+        res.json({ message: 'Profile updated successfully' })
+    } catch (err) {
+        res.status(500).json({ message: 'Server error' })
+    }
+} 

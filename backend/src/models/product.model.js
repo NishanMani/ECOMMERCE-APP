@@ -29,7 +29,16 @@ const productSchema = new mongoose.Schema({
     },
     imageUrl: {
         type: String
+    },
+    size: {
+        type: String,
+        enum: ['S', 'M', 'L', 'XL', 'XXL'],
+        default: 'M'
+    },
+    color: {
+        type: String,
+        enum: ['Red', 'Blue', 'Green', 'Black', 'White', 'Yellow', 'Pink', 'Purple']
     }
 }, { timestamps: true });
 
-export default mongoose.model('Product', productSchema);        
+export default mongoose.model('Product', productSchema);
