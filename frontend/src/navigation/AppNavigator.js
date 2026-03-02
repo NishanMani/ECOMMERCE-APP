@@ -5,6 +5,7 @@ import SplashScreen from "../screens/SplashScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import BottomTabNavigator from "./BottomTabNavigator";
+import ProductDetailScreen from "../screens/ProductDetailScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +15,13 @@ export default function AppNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {isLoggedIn ? (
+     <>
         <Stack.Screen name="Main" component={BottomTabNavigator} />
+        <Stack.Screen
+          name="ProductDetail"
+          component={ProductDetailScreen}
+        />
+      </>
       ) : (
         <>
           <Stack.Screen name="Splash">
