@@ -6,6 +6,8 @@ import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import BottomTabNavigator from "./BottomTabNavigator";
 import ProductDetailScreen from "../screens/ProductDetailScreen";
+import OrdersScreen from "../screens/OrdersScreen";
+import AddressScreen from "../screens/AddressScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,13 +17,15 @@ export default function AppNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {isLoggedIn ? (
-     <>
-        <Stack.Screen name="Main" component={BottomTabNavigator} />
-        <Stack.Screen
-          name="ProductDetail"
-          component={ProductDetailScreen}
-        />
-      </>
+        <>
+          <Stack.Screen name="Main" component={BottomTabNavigator} />
+          <Stack.Screen
+            name="ProductDetail"
+            component={ProductDetailScreen}
+          />
+          <Stack.Screen name="Orders" component={OrdersScreen} />
+          <Stack.Screen name="Addresses" component={AddressScreen} />
+        </>
       ) : (
         <>
           <Stack.Screen name="Splash">

@@ -14,7 +14,7 @@ export default function SplashScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.logo}>GarNex</Text>
-      <Text style={styles.tagline}>  Curated · Crafted · Confident</Text>
+      <Text style={styles.tagline}>  Style · Sets · High</Text>
     </View>
   );
 }
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   tagline: {
     marginTop: 12,
     color: colors.gold,
-    fontSize: 13,
+    fontSize: 15,
     letterSpacing: 2,
     textTransform: "uppercase",
   },
