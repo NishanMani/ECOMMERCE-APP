@@ -1,16 +1,27 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, Text, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useContext } from "react";
 import colors from "../constants/colors";
 
 import HomeScreen from "../screens/HomeScreen";
 import SavedScreen from "../screens/SavedScreen";
 import CartScreen from "../screens/CartScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import { CartContext } from "../context/CartContext";
+import { WishlistContext } from "../context/WishlistContext";
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
+  const { cartItems } = useContext(CartContext);
+  const { wishlistItems } = useContext(WishlistContext);
+
+  const totalItems = cartItems.reduce(
+    (sum, item) => sum + (item.quantity ?? 0),
+    0
+  );
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -43,11 +54,33 @@ export default function BottomTabNavigator() {
           if (route.name === "Cart") iconName = "cart-outline";
           if (route.name === "Profile") iconName = "person-outline";
 
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return (
+            <View>
+              <Ionicons name={iconName} size={size} color={color} />
+
+              {route.name === "Cart" && totalItems > 0 && (
+                <View style={styles.badge}>
+                  <Text style={styles.badgeText}>
+                    {totalItems}
+                  </Text>
+                </View>
+              )}
+
+              {route.name === "Wishlist" && wishlistItems.length > 0 && (
+                <View style={styles.badge}>
+                  <Text style={styles.badgeText}>
+                    {wishlistItems.length}
+                  </Text>
+                </View>
+              )}
+            </View>
+          );
         },
         tabBarLabel: ({ focused, color }) => (
           <View style={styles.labelWrap}>
-            <Text style={[styles.label, { color }]}>{route.name.toUpperCase()}</Text>
+            <Text style={[styles.label, { color }]}>
+              {route.name.toUpperCase()}
+            </Text>
             <View style={[styles.dot, !focused && styles.dotHidden]} />
           </View>
         ),
@@ -81,5 +114,24 @@ const styles = StyleSheet.create({
   },
   dotHidden: {
     opacity: 0,
+  },
+
+  badge: {
+    position: "absolute",
+    right: -6,
+    top: -3,
+    backgroundColor: "red",
+    borderRadius: 10,
+    minWidth: 16,
+    height: 16,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 3,
+  },
+
+  badgeText: {
+    color: "white",
+    fontSize: 10,
+    fontWeight: "bold",
   },
 });
