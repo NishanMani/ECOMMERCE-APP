@@ -25,7 +25,7 @@ const productSchema = new mongoose.Schema({
     },
     stock: {
         type: Number,
-        default: 0
+        default: 0          
     },
     imageUrl: {
         type: String
@@ -38,6 +38,10 @@ const productSchema = new mongoose.Schema({
     color: {
         type: String,
         enum: ['Red', 'Blue', 'Green', 'Black', 'White', 'Yellow', 'Pink', 'Purple']
+    },
+    wishList: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
 

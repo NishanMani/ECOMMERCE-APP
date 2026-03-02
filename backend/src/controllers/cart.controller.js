@@ -10,7 +10,6 @@ const calculateTotalPrice = async (products) => {
       total += product.price * item.quantity
     }
   }
-
   return total
 }
 
@@ -40,7 +39,10 @@ export const addToCart = async (req, res) => {
     }
 
     const existingProductIndex = cart.products.findIndex(
-      (item) => item.productId.toString() === productId
+      (item) =>
+        item.productId.toString() === productId &&
+        item.size === size &&
+        item.color === color
     )
 
     if (existingProductIndex !== -1) {
