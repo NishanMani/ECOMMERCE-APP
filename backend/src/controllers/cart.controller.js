@@ -124,19 +124,5 @@ export const removeFromCart = async (req, res) => {
   }
 }
 
-export const removeAllCart = async (req, res) => {
-  try {
-    const cart = await Cart.findOne({ userId: req.user._id })
-    if (!cart) {
-      return res.status(404).json({ message: 'Cart not found' })
-    }
 
-    cart.products = []
-    cart.totalPrice = 0
-    await cart.save()
 
-    res.status(200).json({ message: 'Cart cleared successfully' })
-  } catch (err) {
-    res.status(500).json({ message: 'Server error' })
-  }
-}

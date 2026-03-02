@@ -4,7 +4,7 @@ import { createProduct, getProducts, getProductById, updateProduct, deleteProduc
 
 const router = express.Router()
 
-router.post('/create', protect, adminOnly ,createProduct)
+router.post('/create',createProduct)
 router.get('/', getProducts)
 router.get('/:id', getProductById)
 router.put('/update/:id', protect, adminOnly, updateProduct)

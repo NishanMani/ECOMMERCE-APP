@@ -58,11 +58,13 @@ export const loginUser = async (req,res) => {
         const refreshToken = generateRefreshToken(user._id)
 
         user.refreshToken = refreshToken
+        user.accessToken = accessToken
         await user.save()
 
         return res.status(200).json({ success : true ,
             message : "User loggedin Successfully",
-            accessToken : accessToken
+            accessToken : accessToken,
+            refreshToken: refreshToken
         })
 
     } catch(error){

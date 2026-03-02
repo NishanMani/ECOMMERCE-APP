@@ -4,6 +4,6 @@ import {protect} from '../middlewares/auth.middleware.js'
 
 const router = express.Router()
 
-router.put('/updateProfile', protect, updateProfile)
+router.put('/updateProfile/:id', protect, updateProfile)
 
 export default router
